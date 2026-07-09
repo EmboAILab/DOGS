@@ -120,26 +120,17 @@
               </div>
             </div>
 
-            <div class="hero-evidence" aria-label="DOGS real-scene and simulation demos">
-              <article class="evidence-card evidence-card-wide">
-                <div class="media-pair">
-                  <figure>
-                    <img src="static/demos/fallbox-real-input.jpg" alt="Real captured box scene used as DOGS input" loading="eager">
-                    <figcaption>Real capture</figcaption>
-                  </figure>
-                  <figure>
-                    <img src="static/demos/fallbox-decoupled.gif" alt="DOGS decoupled object recomposed in a virtual scene" loading="eager">
-                    <figcaption>Decoupled composition</figcaption>
-                  </figure>
-                </div>
-                <h2>Real scene to editable Gaussian assets</h2>
-                <p>DOGS separates the foreground object from the background, keeps both in a shared coordinate frame, and supports independent rendering plus scene recomposition.</p>
+            <div class="hero-evidence" aria-label="DOGS real-scene and simulation evidence">
+              <article class="evidence-card">
+                <img src="static/demos/fallbox-real-input.jpg" alt="Real captured tabletop scene used as DOGS input" loading="eager">
+                <h2>Real-scene input</h2>
+                <p>A captured tabletop object is used as the starting point for object-level decoupling, background recovery, and later scene recomposition.</p>
               </article>
 
               <article class="evidence-card">
                 <img src="static/demos/fallbox-robot-sim.gif" alt="DOGS asset checked with a robot arm in a simulation scene" loading="eager">
-                <h2>Robot-simulation asset check</h2>
-                <p>The decoupled asset is placed into a virtual scene with a robot arm to verify scale, visual placement, and simulation-side loading.</p>
+                <h2>Simulation-interface check</h2>
+                <p>The converted asset is loaded into a virtual scene with a robot arm to inspect visual placement, scale consistency, and simulation-side availability.</p>
               </article>
             </div>
           </div>
@@ -156,28 +147,6 @@
           <h2 class="subtitle has-text-centered">
             DOGS decomposes a multi-view real scene into independent object Gaussian subspaces and a background Gaussian model, then recomposes them in a shared world coordinate system as structured 3D assets for simulation-ready virtual scenes.
           </h2>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="real-scene-demos">
-      <div class="container is-max-desktop">
-        <div class="has-text-centered">
-          <h2 class="title is-3">Real-Scene Demos</h2>
-        </div>
-        <div class="demo-strip">
-          <figure class="demo-card">
-            <img src="static/demos/desk-background.gif" alt="DOGS background recovery demo on a desk scene" loading="lazy">
-            <figcaption>Background recovery</figcaption>
-          </figure>
-          <figure class="demo-card">
-            <img src="static/demos/fallastr-decoupled.gif" alt="DOGS decoupled object composition demo with an astronaut object" loading="lazy">
-            <figcaption>Object recomposition</figcaption>
-          </figure>
-          <figure class="demo-card">
-            <img src="static/demos/fallcattle-decoupled.gif" alt="DOGS decoupled object composition demo with a cattle object" loading="lazy">
-            <figcaption>Cross-scene reuse</figcaption>
-          </figure>
         </div>
       </div>
     </section>
