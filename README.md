@@ -15,7 +15,7 @@ https://emboailab.github.io/DOGS/
 Code release:
 
 ```text
-https://github.com/EmboAILab/DOGS-ObjectGaussian-RobotSim
+https://github.com/EmboAILab/DOGS
 ```
 
 The public page and source release omit author biographies, personal contact
