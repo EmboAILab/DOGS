@@ -1,0 +1,7 @@
+numpy
+scipy
+scikit-image
+open3d
+trimesh
+plyfile
+usd-core

@@ -92,7 +92,7 @@
                   </a>
                 </span>
                 <span class="link-block">
-                  <a href="https://github.com/EmboAILab/DOGS-ObjectGaussian-RobotSim/tree/main/Assets" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener">
+                  <a href="https://github.com/EmboAILab/DOGS/tree/main/Assets" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener">
                     <span class="icon"><i class="fas fa-database"></i></span>
                     <span>Assets</span>
                   </a>
@@ -209,13 +209,13 @@
             <span class="step-number">1</span>
             <h3>Object Gaussian Subspaces</h3>
             <p>Each target instance is optimized as an independent object Gaussian model using multi-view RGB images and cross-view consistent instance masks.</p>
-            <code>L_object = L_obj-fg + lambda_alpha * L_obj-alpha</code>
+            <code>L_object = mean_masked(L1 RGB) + lambda_alpha * mean_outside(|alpha|)</code>
           </div>
           <div class="method-step">
             <span class="step-number">2</span>
             <h3>Background Gaussian Model</h3>
-            <p>The background is trained after object regions are excluded, with LaMa-based completion priors and local geometry regularization for long-term occluded regions.</p>
-            <code>L_bg = L_bg-rgb + lambda_reg * L_bg-reg</code>
+            <p>The background is trained after object regions are excluded. Visible and LaMa-inpainted regions are normalized separately, the inpainted term is weighted by rho, and local plane residuals regularize background Gaussian centers.</p>
+            <code>L_bg = L_bg-rgb + lambda_reg * L_bg-reg, rho = 0.1</code>
           </div>
           <div class="method-step">
             <span class="step-number">3</span>
@@ -235,7 +235,7 @@
         <div class="result-stack">
           <figure class="figure-card">
             <img src="static/images/dogs-real-scene-evidence.png" alt="Traceable DOGS real-scene decoupling evidence" loading="lazy">
-            <figcaption>A traceable tabletop example records the real capture, independent object placement, object-removed background, and robot-scene coexistence.</figcaption>
+            <figcaption>A real tabletop example links captured input, independently rendered objects, object-removed background recovery, parameter-level recomposition, and robot-scene coexistence.</figcaption>
           </figure>
           <figure class="figure-card">
             <img src="static/images/dogs-parameter-repositioning.png" alt="DOGS parameter-level object repositioning records" loading="lazy">
@@ -243,11 +243,11 @@
           </figure>
           <figure class="figure-card">
             <img src="static/images/dogs-simulation-interface.png" alt="Selected DOGS USDZ visual interface records" loading="lazy">
-            <figcaption>Four selected cases link real observations, rendered objects, USDZ scene placement, and robot-scene coexistence without treating the rows as task trials.</figcaption>
+            <figcaption>The asset pathway links independent Gaussian rendering, mesh and collision-proxy conversion, USD/USDZ or URDF packaging, and Isaac Sim / Isaac Lab hierarchy checks.</figcaption>
           </figure>
           <figure class="figure-card">
             <img src="static/images/dogs-asset-correspondence.png" alt="Real-to-virtual correspondence for four DOGS object categories" loading="lazy">
-            <figcaption>Four object categories are traced across real front and wrist views, a virtual-scene view, and two frames from one overhead/robot-view stream.</figcaption>
+            <figcaption>Four object categories are traced across real frontal and wrist-camera views, imported virtual scenes, virtual-environment top views, and robot-view inspections.</figcaption>
           </figure>
         </div>
       </div>
@@ -261,11 +261,11 @@
         <div class="interface-grid">
           <article class="interface-card">
             <h3>Checked</h3>
-            <p>Selected object rendering, USDZ placement, real-to-virtual correspondence, and robot-scene coexistence records.</p>
+            <p>Object rendering, USD/URDF packaging, scene-tree parsing, relative placement and scale, hierarchy, and collision-proxy availability.</p>
           </article>
           <article class="interface-card">
             <h3>Not claimed</h3>
-            <p>Import probability, numerical scale error, collision fidelity, dynamics, contact stability, mass/inertia calibration, closed-loop control, and task performance are not established by the displayed records.</p>
+            <p>Dynamics accuracy, contact stability, mass/inertia calibration, closed-loop control, and robot task performance are outside the reported evaluation.</p>
           </article>
         </div>
       </div>
@@ -278,7 +278,7 @@
         </div>
         <div class="content has-text-justified">
           <p>
-            The source release provides the paper-aligned training entry point, conversion utilities, figure-source manifests, and asset-placement instructions.
+            The source release provides the paper-aligned training losses, boundary and leakage metrics, conversion utilities, simulation-interface notes, figure-source manifests, and asset-placement instructions.
           </p>
           <p>
             Large media, model weights, Gaussian outputs, and USD/USDZ assets are excluded from the source repository and indexed by relative path and checksum in the asset manifests.
