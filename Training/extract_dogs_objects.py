@@ -64,6 +64,8 @@ def main() -> None:
             {
                 "source_iteration": int(scene.loaded_iter),
                 "classifier": classifier_path,
+                "grouping_rule": "argmax_identity_with_confidence_threshold",
+                "confidence_threshold": float(args.threshold),
                 "objects": records,
             },
             handle,

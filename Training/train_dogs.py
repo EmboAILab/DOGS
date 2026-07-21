@@ -31,11 +31,12 @@ from dogs_losses import (
     local_plane_residual_loss,
     mask_outside_alpha_loss,
     object_foreground_loss,
+    supervision_pixel_counts,
 )
 from dogs_identity import (
     build_identity_classifier,
+    dataset_object_ids,
     gaussian_identity_probabilities,
-    visible_object_ids,
 )
 
 try:
@@ -192,6 +193,21 @@ def training(
     scene = Scene(dataset, gaussians)
     gaussians.training_setup(opt)
 
+    training_cameras = scene.getTrainCameras()
+    label_maps = [camera.objects for camera in training_cameras]
+    object_ids = dataset_object_ids(
+        label_maps,
+        args.background_label,
+        dataset.num_classes,
+    )
+    supervision_counts = supervision_pixel_counts(
+        label_maps,
+        object_ids,
+        args.background_label,
+    )
+    if args.mode == "objects" and not object_ids:
+        raise ValueError("object mode requires at least one foreground identity")
+
     classifier = None
     classifier_optimizer = None
     if args.mode == "objects":
@@ -279,7 +295,7 @@ def training(
             alpha_terms = []
             densification_packages = []
             black = torch.zeros(3, dtype=torch.float32, device=image.device)
-            for object_id in visible_object_ids(labels, args.background_label, dataset.num_classes):
+            for object_id in object_ids:
                 opacity_modifier = probabilities[:, object_id].unsqueeze(-1)
                 try:
                     object_render_pkg = render(
@@ -301,6 +317,8 @@ def training(
                         object_render_pkg["render"],
                         gt_image,
                         object_mask,
+                        normalizer=supervision_counts["object_foreground"][object_id],
+                        sample_scale=supervision_counts["view_count"],
                     )
                 )
                 object_alpha = resolve_alpha(
@@ -315,6 +333,8 @@ def training(
                     mask_outside_alpha_loss(
                         object_alpha,
                         valid_mask & ~object_mask,
+                        normalizer=supervision_counts["object_outside"][object_id],
+                        sample_scale=supervision_counts["view_count"],
                     )
                 )
 
@@ -336,6 +356,9 @@ def training(
                 inpainted=inpainted,
                 object_union_mask=object_union_mask,
                 rho=args.rho,
+                visible_normalizer=supervision_counts["background_visible"],
+                prior_normalizer=supervision_counts["object_union"],
+                sample_scale=supervision_counts["view_count"],
             )
             if iteration % args.reg_interval == 0:
                 loss_bg_reg = local_plane_residual_loss(
@@ -441,6 +464,9 @@ def prepare_output_and_logger(dataset, args):
         "reg_interval": args.reg_interval,
         "reg_max_points": args.reg_max_points,
         "alpha_source": args.alpha_source,
+        "loss_aggregation": "fixed_all_view_denominators_with_uniform_view_sampling",
+        "object_loss_aggregation": "mean_over_all_scene_object_ids",
+        "extraction_rule": "argmax_identity_with_confidence_threshold",
     }
     with open(os.path.join(dataset.model_path, "dogs_run.json"), "w", encoding="utf-8") as handle:
         json.dump(run_record, handle, indent=2)

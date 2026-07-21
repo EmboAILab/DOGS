@@ -55,19 +55,44 @@ def visible_object_ids(labels, background_label: int, num_classes: int) -> list[
     ]
 
 
+def dataset_object_ids(label_maps, background_label: int, num_classes: int) -> list[int]:
+    """Return all foreground identities present across the training views."""
+    ids = set()
+    for label_map in label_maps:
+        labels = torch.as_tensor(label_map).long()
+        ids.update(int(value) for value in torch.unique(labels[labels >= 0]).tolist())
+    return sorted(
+        value
+        for value in ids
+        if value != int(background_label) and value < int(num_classes)
+    )
+
+
+def hard_identity_assignment(
+    probabilities: torch.Tensor,
+    threshold: float = 0.3,
+) -> torch.Tensor:
+    """Assign each Gaussian to at most one identity using argmax plus confidence gating."""
+    if probabilities.dim() != 2:
+        raise ValueError("probabilities must have shape [N, C]")
+    if not 0.0 <= threshold <= 1.0:
+        raise ValueError("threshold must satisfy 0 <= threshold <= 1")
+    confidence, assignment = probabilities.max(dim=1)
+    return assignment.masked_fill(confidence <= float(threshold), -1)
+
+
 def hard_object_mask(
     probabilities: torch.Tensor,
     object_id: int,
     threshold: float = 0.3,
 ) -> torch.Tensor:
-    """Select the post-training Gaussian group for one object identity."""
+    """Select one mutually exclusive post-training Gaussian identity group."""
     if probabilities.dim() != 2:
         raise ValueError("probabilities must have shape [N, C]")
     if not 0 <= object_id < probabilities.shape[1]:
         raise IndexError(f"object_id {object_id} is outside [0, {probabilities.shape[1]})")
-    if not 0.0 <= threshold <= 1.0:
-        raise ValueError("threshold must satisfy 0 <= threshold <= 1")
-    return probabilities[:, object_id] > float(threshold)
+    assignment = hard_identity_assignment(probabilities, threshold)
+    return assignment == int(object_id)
 
 
 def save_gaussian_subset(gaussians, mask: torch.Tensor, output_path: str | Path) -> int:

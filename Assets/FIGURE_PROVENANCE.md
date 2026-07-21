@@ -4,7 +4,7 @@ The submitted DOGS figures use three source classes:
 
 1. Figures 1-3 are manually authored method diagrams exported as vector PDFs from the project PowerPoint sources.
 2. Figures 4-7 and Appendix Fig. D.1 are manually authored composites of real photographs, reconstructed-scene outputs, or frames selected from recorded experimental and simulation videos.
-3. Figure 8 and Appendix Figs. B.1 and D.2 are deterministic statistical plots exported from the numerical records reported in the manuscript.
+3. Figure 8 is a deterministic statistical plot exported from the ablation records reported in the manuscript.
 
 `FIGURE_SOURCE_MANIFEST.csv` maps each figure or panel to its source path and SHA-256 checksum. `PAPER_MEDIA_MANIFEST.csv` records the available still and video pool with byte counts and checksums. Large source media are kept outside GitHub under the restore policy in `ASSET_MANIFEST.csv`.
 

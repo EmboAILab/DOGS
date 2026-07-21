@@ -18,12 +18,12 @@ The release is intentionally source-focused. It does not include full upstream r
   - DOGS training entry point adapted from the Gaussian-Grouping / 3DGS workflow.
   - Implements normalized object foreground supervision, mask-outside alpha suppression, observed/inpainted background RGB supervision, and local plane regularization.
   - Learns all object-aware Gaussian parameter groups in one multi-object run and trains the aligned background as a separate model.
-  - Uses softmax identity probabilities to modulate Gaussian opacity during per-object rendering and averages the losses over visible object IDs.
+  - Uses fixed all-view pixel normalizers with uniformly sampled-view numerators, matching Eqs. (1), (2), and (6) while averaging object terms over all scene object IDs.
   - Uses the surrounding Gaussian-Grouping/3DGS renderer, scene classes, camera loader, and mask fields. Apply `Training/patches/gaussian_renderer_opacity_modifier.patch` in the compatible base codebase before running.
 
 - `Training/extract_dogs_objects.py`
   - Reuses the grouped checkpoint and classifier to extract multiple object Gaussian subspaces without retraining.
-  - Applies the paper's fixed probability threshold of 0.3 by default and records each exported object's Gaussian count.
+  - Applies argmax identity assignment followed by the paper's confidence threshold of 0.3, producing mutually exclusive exported groups and recording each object's Gaussian count.
 
 - `Evaluation/`
   - Implements the boundary F-score and background leakage rate used by the decoupling ablation.

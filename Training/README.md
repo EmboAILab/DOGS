@@ -34,10 +34,13 @@ python train_dogs.py -s path/to/scene -m output/background \
 ```
 
 In `objects` mode, a lightweight classifier maps each Gaussian identity feature
-to a softmax distribution. For every object visible in the sampled view, its
-identity probability modulates Gaussian opacity before foreground RGB and
-mask-outside alpha losses are evaluated. The losses are averaged over visible
-object IDs. The grouped checkpoint and `classifier.pth` are saved together.
+to a softmax distribution. Every scene object is rendered in each uniformly
+sampled view, including views where that object is absent. The implementation
+precomputes the fixed all-view pixel counts in Eqs. (1), (2), and (6), then scales
+each sampled-view numerator by the number of training views. Averaging these
+sampled estimates recovers the all-view normalized objectives, and object terms
+are averaged over the complete scene-level object-ID set. The grouped checkpoint
+and `classifier.pth` are saved together.
 
 After training, any number of object assets can be extracted from that one model
 without retraining:
@@ -47,8 +50,12 @@ python extract_dogs_objects.py -m output/grouped_objects --iteration 10000 \
   --object-ids 34 47 52 --threshold 0.3
 ```
 
-The extraction command writes one PLY per selected identity plus an
-`extraction_manifest.json` containing the threshold and Gaussian counts.
+The extraction command first assigns each Gaussian to its maximum-probability
+identity and then rejects assignments whose confidence does not exceed the
+threshold. This argmax-plus-threshold rule makes exported object groups mutually
+exclusive. It writes one PLY per selected identity plus an
+`extraction_manifest.json` containing the grouping rule, threshold, and Gaussian
+counts.
 
 Object mode obtains accumulated alpha from the renderer when available.
 Otherwise, `--alpha-source auto` recovers the same compositing quantity from
