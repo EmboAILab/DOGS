@@ -1,8 +1,8 @@
-"""DOGS training entry point for one independently stored Gaussian parameter set.
+"""DOGS grouped-object training and independent-background optimization.
 
-This file is intended to run inside the Gaussian-Grouping/3DGS codebase used by
-the project.  Each invocation trains either one object Gaussian subspace or the
-background Gaussian model.  The two modes never share a Gaussian parameter set.
+Object mode learns all identity-aware Gaussian parameter groups in one run and
+saves one classifier for repeated identity-based extraction. Background mode
+optimizes the separately stored background Gaussian model.
 """
 
 from __future__ import annotations
@@ -32,6 +32,11 @@ from dogs_losses import (
     mask_outside_alpha_loss,
     object_foreground_loss,
 )
+from dogs_identity import (
+    build_identity_classifier,
+    gaussian_identity_probabilities,
+    visible_object_ids,
+)
 
 try:
     import wandb
@@ -55,20 +60,52 @@ def renderer_alpha(render_pkg):
     return None
 
 
-def dual_background_alpha(viewpoint, gaussians, pipe):
+def dual_background_alpha(
+    viewpoint,
+    gaussians,
+    pipe,
+    opacity_modifier=None,
+    black_image=None,
+):
     """Recover accumulated alpha from black/white background renders."""
     device = gaussians.get_xyz.device
     black = torch.zeros(3, dtype=torch.float32, device=device)
     white = torch.ones(3, dtype=torch.float32, device=device)
-    black_image = render(viewpoint, gaussians, pipe, black)["render"]
-    white_image = render(viewpoint, gaussians, pipe, white)["render"]
+    if black_image is None:
+        black_image = render(
+            viewpoint,
+            gaussians,
+            pipe,
+            black,
+            opacity_modifier=opacity_modifier,
+        )["render"]
+    white_image = render(
+        viewpoint,
+        gaussians,
+        pipe,
+        white,
+        opacity_modifier=opacity_modifier,
+    )["render"]
     transmittance = (white_image - black_image).mean(dim=0)
     return (1.0 - transmittance).clamp(0.0, 1.0)
 
 
-def resolve_alpha(args, viewpoint, gaussians, pipe, render_pkg):
+def resolve_alpha(
+    args,
+    viewpoint,
+    gaussians,
+    pipe,
+    render_pkg,
+    opacity_modifier=None,
+):
     if args.alpha_source == "dual-render":
-        return dual_background_alpha(viewpoint, gaussians, pipe)
+        return dual_background_alpha(
+            viewpoint,
+            gaussians,
+            pipe,
+            opacity_modifier=opacity_modifier,
+            black_image=render_pkg["render"],
+        )
     alpha = renderer_alpha(render_pkg)
     if alpha is not None:
         return alpha
@@ -77,14 +114,18 @@ def resolve_alpha(args, viewpoint, gaussians, pipe, render_pkg):
             "The selected renderer does not expose accumulated alpha. "
             "Use --alpha-source dual-render or add an alpha output to the renderer."
         )
-    return dual_background_alpha(viewpoint, gaussians, pipe)
+    return dual_background_alpha(
+        viewpoint,
+        gaussians,
+        pipe,
+        opacity_modifier=opacity_modifier,
+        black_image=render_pkg["render"],
+    )
 
 
-def camera_mask(viewpoint, args):
+def background_mask(viewpoint, args):
     labels = viewpoint.objects.to(device="cuda").long()
     valid = labels >= 0
-    if args.mode == "object":
-        return valid & (labels == args.object_id), valid
     return valid & (labels == args.background_label), valid
 
 
@@ -151,15 +192,20 @@ def training(
     scene = Scene(dataset, gaussians)
     gaussians.training_setup(opt)
 
-    if args.mode == "object":
-        object_is_present = any(
-            bool((camera.objects.long() == args.object_id).any()) for camera in scene.getTrainCameras()
-        )
-        if not object_is_present:
-            raise ValueError(f"Object ID {args.object_id} is absent from every training view")
+    classifier = None
+    classifier_optimizer = None
+    if args.mode == "objects":
+        classifier = build_identity_classifier(gaussians, dataset.num_classes).cuda()
+        classifier_optimizer = torch.optim.Adam(classifier.parameters(), lr=5e-4)
 
     if checkpoint:
-        model_params, first_iter = torch.load(checkpoint)
+        payload = torch.load(checkpoint)
+        if len(payload) == 3:
+            model_params, classifier_state, first_iter = payload
+            if classifier is not None and classifier_state is not None:
+                classifier.load_state_dict(classifier_state)
+        else:
+            model_params, first_iter = payload
         gaussians.restore(model_params, opt)
 
     bg_color = [1, 1, 1] if dataset.white_background else [0, 0, 0]
@@ -217,7 +263,9 @@ def training(
         render_pkg = render(viewpoint, gaussians, pipe, background)
         image = render_pkg["render"]
         gt_image = viewpoint.original_image.to(device="cuda")
-        domain_mask, valid_mask = camera_mask(viewpoint, args)
+        labels = viewpoint.objects.to(device="cuda").long()
+        valid_mask = labels >= 0
+        densification_packages = [render_pkg]
 
         zero = image.new_zeros(())
         loss_obj_fg = zero
@@ -225,13 +273,59 @@ def training(
         loss_bg_rgb = zero
         loss_bg_reg = zero
 
-        if args.mode == "object":
-            loss_obj_fg = object_foreground_loss(image, gt_image, domain_mask)
-            alpha = resolve_alpha(args, viewpoint, gaussians, pipe, render_pkg)
-            outside_mask = valid_mask & ~domain_mask
-            loss_obj_alpha = mask_outside_alpha_loss(alpha, outside_mask)
-            loss = loss_obj_fg + args.lambda_alpha * loss_obj_alpha
+        if args.mode == "objects":
+            probabilities = gaussian_identity_probabilities(classifier, gaussians)
+            foreground_terms = []
+            alpha_terms = []
+            densification_packages = []
+            black = torch.zeros(3, dtype=torch.float32, device=image.device)
+            for object_id in visible_object_ids(labels, args.background_label, dataset.num_classes):
+                opacity_modifier = probabilities[:, object_id].unsqueeze(-1)
+                try:
+                    object_render_pkg = render(
+                        viewpoint,
+                        gaussians,
+                        pipe,
+                        black,
+                        opacity_modifier=opacity_modifier,
+                    )
+                except TypeError as exc:
+                    raise RuntimeError(
+                        "The Gaussian renderer lacks DOGS opacity modulation. Apply "
+                        "Training/patches/gaussian_renderer_opacity_modifier.patch."
+                    ) from exc
+                densification_packages.append(object_render_pkg)
+                object_mask = valid_mask & (labels == object_id)
+                foreground_terms.append(
+                    object_foreground_loss(
+                        object_render_pkg["render"],
+                        gt_image,
+                        object_mask,
+                    )
+                )
+                object_alpha = resolve_alpha(
+                    args,
+                    viewpoint,
+                    gaussians,
+                    pipe,
+                    object_render_pkg,
+                    opacity_modifier=opacity_modifier,
+                )
+                alpha_terms.append(
+                    mask_outside_alpha_loss(
+                        object_alpha,
+                        valid_mask & ~object_mask,
+                    )
+                )
+
+            if foreground_terms:
+                loss_obj_fg = torch.stack(foreground_terms).mean()
+                loss_obj_alpha = torch.stack(alpha_terms).mean()
+                loss = loss_obj_fg + args.lambda_alpha * loss_obj_alpha
+            else:
+                loss = image.sum() * 0.0
         else:
+            domain_mask, valid_mask = background_mask(viewpoint, args)
             inpainted, object_union_mask = background_prior(
                 viewpoint, args, gt_image, domain_mask, valid_mask, inpaint_cache
             )
@@ -278,15 +372,25 @@ def training(
             if iteration in saving_iterations:
                 print(f"\n[ITER {iteration}] Saving {args.mode} Gaussian parameter set")
                 scene.save(iteration)
+                if classifier is not None:
+                    torch.save(
+                        classifier.state_dict(),
+                        os.path.join(
+                            scene.model_path,
+                            f"point_cloud/iteration_{iteration}/classifier.pth",
+                        ),
+                    )
 
             if iteration < opt.densify_until_iter:
-                visibility_filter = render_pkg["visibility_filter"]
-                radii = render_pkg["radii"]
-                viewspace_points = render_pkg["viewspace_points"]
-                gaussians.max_radii2D[visibility_filter] = torch.max(
-                    gaussians.max_radii2D[visibility_filter], radii[visibility_filter]
-                )
-                gaussians.add_densification_stats(viewspace_points, visibility_filter)
+                for densification_pkg in densification_packages:
+                    visibility_filter = densification_pkg["visibility_filter"]
+                    radii = densification_pkg["radii"]
+                    viewspace_points = densification_pkg["viewspace_points"]
+                    gaussians.max_radii2D[visibility_filter] = torch.max(
+                        gaussians.max_radii2D[visibility_filter], radii[visibility_filter]
+                    )
+                    if viewspace_points.grad is not None:
+                        gaussians.add_densification_stats(viewspace_points, visibility_filter)
                 if iteration > opt.densify_from_iter and iteration % opt.densification_interval == 0:
                     size_threshold = 20 if iteration > opt.opacity_reset_interval else None
                     gaussians.densify_and_prune(
@@ -303,10 +407,14 @@ def training(
             if iteration < opt.iterations:
                 gaussians.optimizer.step()
                 gaussians.optimizer.zero_grad(set_to_none=True)
+                if classifier_optimizer is not None:
+                    classifier_optimizer.step()
+                    classifier_optimizer.zero_grad(set_to_none=True)
 
             if iteration in checkpoint_iterations:
                 checkpoint_path = os.path.join(scene.model_path, f"chkpnt{iteration}.pth")
-                torch.save((gaussians.capture(), iteration), checkpoint_path)
+                classifier_state = classifier.state_dict() if classifier is not None else None
+                torch.save((gaussians.capture(), classifier_state, iteration), checkpoint_path)
 
 
 def prepare_output_and_logger(dataset, args):
@@ -321,8 +429,8 @@ def prepare_output_and_logger(dataset, args):
 
     run_record = {
         "mode": args.mode,
-        "object_id": args.object_id,
         "background_label": args.background_label,
+        "num_classes": args.num_classes,
         "iterations": args.dogs_iterations,
         "seed": args.seed,
         "lambda_alpha": args.lambda_alpha,
@@ -358,7 +466,6 @@ def apply_config(args):
         config = json.load(handle)
     allowed = {
         "mode",
-        "object_id",
         "background_label",
         "dogs_iterations",
         "seed",
@@ -385,13 +492,12 @@ def apply_config(args):
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser(description="Train one DOGS object subspace or the DOGS background model")
+    parser = ArgumentParser(description="Train grouped DOGS objects or the independent background model")
     lp = ModelParams(parser)
     op = OptimizationParams(parser)
     pp = PipelineParams(parser)
 
-    parser.add_argument("--mode", choices=("object", "background"), required=True)
-    parser.add_argument("--object-id", type=int)
+    parser.add_argument("--mode", choices=("objects", "background"), required=True)
     parser.add_argument("--background-label", type=int, default=0)
     parser.add_argument("--dogs-iterations", type=int, default=10_000)
     parser.add_argument("--seed", type=int, default=0)
@@ -416,8 +522,6 @@ if __name__ == "__main__":
     parser.add_argument("--use-wandb", action="store_true")
 
     args = apply_config(parser.parse_args(sys.argv[1:]))
-    if args.mode == "object" and args.object_id is None:
-        parser.error("--object-id is required when --mode object is selected")
     if not 0.0 <= args.rho < 1.0:
         parser.error("--rho must satisfy 0 <= rho < 1")
     if args.use_wandb and wandb is None:
