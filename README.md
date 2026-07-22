@@ -26,8 +26,12 @@ The release is intentionally source-focused. It does not include full upstream r
   - Applies argmax identity assignment followed by the paper's confidence threshold of 0.3, producing mutually exclusive exported groups and recording each object's Gaussian count.
 
 - `Evaluation/`
-  - Implements the boundary F-score and background leakage rate used by the decoupling ablation.
-  - Aggregates metric counts over test views using the manuscript threshold and boundary tolerance.
+  - Provides the PSNR, SSIM, and LPIPS reconstruction entry used for the paper's main image-quality protocol.
+  - Implements the reported background leakage rate and the auxiliary, non-reported boundary F-score protocol.
+
+- `Composition/`
+  - Directly concatenates compatible background and object Gaussian PLY parameter records in their shared world coordinate system.
+  - Applies no translation, rotation, or scale transform and writes a SHA-256/count manifest for the composed scene.
 
 - `Translate/`
   - Minimal Gaussian PLY to simulation asset conversion workflow.
@@ -35,7 +39,7 @@ The release is intentionally source-focused. It does not include full upstream r
   - Only the conversion scripts and their direct local dependencies are included. The full 3DGRUT project is not vendored.
 
 - `Simulation/`
-  - Interface notes for checking converted DOGS assets in Isaac Sim / Isaac Lab-style scenes.
+  - Documentation for checking converted DOGS assets in simulation scenes; this folder does not contain simulator-side executable code.
   - The full simulation platform, large robot assets, and generated USD/USDZ files are not vendored.
 
 - `Assets/`
@@ -50,11 +54,11 @@ DOGS focuses on object-level decoupled modeling of real captured scenes, indepen
 
 1. object Gaussian subspace training with foreground supervision and mask-outside alpha suppression;
 2. background Gaussian modeling with RGB supervision and local geometry regularization;
-3. parameter-level scene composition in a shared world coordinate frame;
+3. executable parameter-level scene composition in a shared world coordinate frame;
 4. Gaussian-to-asset conversion through mesh/collision-proxy and USD/USDZ carriers;
-5. selected Isaac Sim / Isaac Lab interface checks for visibility, placement, and robot-scene coexistence.
+5. documentation corresponding to the selected USDZ visual-import evidence shown in Isaac Sim.
 
-The simulation-facing evidence is an asset-interface check. Collision accuracy, mass/inertia parameters, contact stability, and task-level robot behavior require simulator-side calibration outside DOGS.
+The displayed simulation-facing evidence covers USDZ visual import, object placement, and robot-scene coexistence in Isaac Sim. It does not establish URDF or Isaac Lab compatibility, hierarchy validation, collision-proxy loading, numerical scale accuracy, dynamics, or task-level behavior.
 
 ## External Dependencies
 
@@ -98,9 +102,9 @@ Do not add unrelated local demos, full upstream repositories, private documents,
 ## Evaluation Scope
 
 The manuscript evaluates object and background reconstruction, composed-scene
-rendering, boundary purity, opacity leakage, and selected asset-interface checks.
-The simulation-facing evidence remains limited to visual assets, coordinate and
-scale consistency, hierarchy, and geometric-proxy availability.
+rendering, opacity leakage, an auxiliary boundary protocol, and selected visual
+asset-interface evidence. The directly displayed simulation evidence is limited
+to USDZ visual import, object placement, and robot-scene coexistence in Isaac Sim.
 
 ## 3DGRUT Attribution
 

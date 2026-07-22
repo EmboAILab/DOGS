@@ -158,10 +158,10 @@
                 Object-level 3D scene reconstruction requires representations that preserve appearance while exposing foreground objects and background context as separately manageable components. Conventional scene-level 3D Gaussian Splatting couples these components in one parameter field, obscuring object ownership and complicating object removal, background recovery, and scene recomposition.
               </p>
               <p>
-                DOGS addresses this representation gap by optimizing each target in an object Gaussian subspace with cross-view instance masks, foreground supervision, and mask-outside alpha suppression. A separately supervised background Gaussian model combines visible-background observations with weak inpainting priors, and parameter-level scene composition assembles the resulting components in a shared coordinate system.
+                DOGS addresses this representation gap through one multi-object optimization that maintains an instance-identity distribution for each Gaussian. Cross-view instance masks, foreground supervision, and mask-outside alpha suppression establish object-aware parameter groups, which are extracted by hard identity assignment after convergence. A separately supervised background Gaussian model combines visible-background observations with weak inpainting priors, and parameter-level scene composition assembles the resulting components in a shared coordinate system.
               </p>
               <p>
-                The current evidence follows traceable real-scene and real-to-virtual records: object relocation, background recovery after object removal, four-category correspondence across real and virtual views, and selected USD/USDZ deployment views. These observations support a visual scene-representation and asset-provisioning interpretation; they do not establish dynamics accuracy, collision fidelity, population-level reconstruction superiority, or closed-loop task performance.
+                The current evidence follows traceable real-scene and real-to-virtual records: object relocation, background recovery after object removal, four-category correspondence across real and virtual views, and selected USDZ visual-import records in Isaac Sim. These observations support a visual scene-representation and asset-provisioning interpretation; they do not establish URDF or Isaac Lab compatibility, hierarchy validation, collision-proxy loading, numerical scale accuracy, dynamics accuracy, or closed-loop task performance.
               </p>
             </div>
           </div>
@@ -193,7 +193,7 @@
           <article class="feature-card">
             <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
             <h3>Evidence chain</h3>
-            <p>Evaluation links object reconstruction, background recovery, composed-scene consistency, and Isaac Sim / Isaac Lab asset-interface checks to the same object-level decoupling claim.</p>
+            <p>Evaluation links object reconstruction, background recovery, composed-scene consistency, and the displayed Isaac Sim visual-import records to the same object-level decoupling claim.</p>
           </article>
         </div>
       </div>
@@ -208,7 +208,7 @@
           <div class="method-step">
             <span class="step-number">1</span>
             <h3>Object Gaussian Subspaces</h3>
-            <p>Each target instance is optimized as an independent object Gaussian model using multi-view RGB images and cross-view consistent instance masks.</p>
+            <p>A single multi-object optimization maintains an instance-identity distribution for every Gaussian. After convergence, confidence-thresholded hard assignment exports each object Gaussian subspace without retraining.</p>
             <code>L_object = mean_masked(L1 RGB) + lambda_alpha * mean_outside(|alpha|)</code>
           </div>
           <div class="method-step">
@@ -243,7 +243,7 @@
           </figure>
           <figure class="figure-card">
             <img src="static/images/dogs-simulation-interface.png" alt="Selected DOGS USDZ visual interface records" loading="lazy">
-            <figcaption>The asset pathway links independent Gaussian rendering, mesh and collision-proxy conversion, USD/USDZ or URDF packaging, and Isaac Sim / Isaac Lab hierarchy checks.</figcaption>
+            <figcaption>The displayed cases link real input, an independently rendered DOGS object, USDZ visual import in Isaac Sim, and the same scene after adding a robot.</figcaption>
           </figure>
           <figure class="figure-card">
             <img src="static/images/dogs-asset-correspondence.png" alt="Real-to-virtual correspondence for four DOGS object categories" loading="lazy">
@@ -260,12 +260,12 @@
         </div>
         <div class="interface-grid">
           <article class="interface-card">
-            <h3>Checked</h3>
-            <p>Object rendering, USD/URDF packaging, scene-tree parsing, relative placement and scale, hierarchy, and collision-proxy availability.</p>
+            <h3>Displayed evidence</h3>
+            <p>Independent object rendering, USDZ visual import in Isaac Sim, visible object placement, and robot-scene coexistence in the selected cases.</p>
           </article>
           <article class="interface-card">
             <h3>Not claimed</h3>
-            <p>Dynamics accuracy, contact stability, mass/inertia calibration, closed-loop control, and robot task performance are outside the reported evaluation.</p>
+            <p>URDF and Isaac Lab compatibility, scene hierarchy, collision-proxy loading, numerical scale error, dynamics, and task performance are not inferred from these images.</p>
           </article>
         </div>
       </div>
@@ -278,7 +278,7 @@
         </div>
         <div class="content has-text-justified">
           <p>
-            The source release provides the paper-aligned training losses, boundary and leakage metrics, conversion utilities, simulation-interface notes, figure-source manifests, and asset-placement instructions.
+            The source release provides the paper-aligned training losses, PSNR/SSIM/LPIPS evaluation, the reported leakage metric, an auxiliary boundary-analysis protocol, executable parameter-level composition, conversion utilities, simulation-interface documentation, figure-source manifests, and asset-placement instructions.
           </p>
           <p>
             Large media, model weights, Gaussian outputs, and USD/USDZ assets are excluded from the source repository and indexed by relative path and checksum in the asset manifests.

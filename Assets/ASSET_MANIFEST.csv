@@ -8,4 +8,4 @@ inpainting-model,code/GaussianModel/lama/big-lama/,"LaMa completion model used w
 inpainting-backbone-weights,code/GaussianModel/lama/hub/checkpoints/,"Backbone weights required by the LaMa background-completion workflow.",external package or upstream download
 training-checkpoints,code/GaussianModel/checkpoint/,"Optional paper-related training checkpoints for reproducing reported DOGS experiments.",external package only
 gaussian-outputs,code/GaussianModel/output/,"Paper-related object, background, and composed Gaussian outputs used for visual checks and conversion tests.",external package only
-simulation-assets,code/leisaac/assets/dogs/,"DOGS-converted USD/USDZ assets, mesh proxies, collision proxies, and Isaac Sim / Isaac Lab import/interface-check assets.",external package only
+simulation-assets,code/leisaac/assets/dogs/,"DOGS-converted USD/USDZ assets and optional mesh or collision-proxy carriers. The paper directly displays selected USDZ visual-import records in Isaac Sim; presence in this package does not imply URDF or Isaac Lab compatibility, hierarchy validation, collision loading, or numerical scale verification.",external package only
