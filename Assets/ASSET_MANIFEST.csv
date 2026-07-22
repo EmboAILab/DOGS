@@ -1,11 +1,8 @@
 category,restore_path,description,git_policy
-paper-real-demo,results/fallBox/,"Real DSC_6922.JPG capture, decoupled virtual-scene aggregation media, and boxsim robot-arm interface-check assets used for the front-page DOGS demonstration.",external package only
-paper-background-demo,results/desk/,"Background separation and background Gaussian recovery demo assets used for qualitative evidence.",external package only
-paper-object-demo,results/fallAstr/,"Additional independently stored object-placement records; no cross-scene accuracy claim is attached.",external package only
-paper-object-demo,results/fallCattle/,"Additional independently stored object-placement records; no cross-scene accuracy claim is attached.",external package only
-segmentation-weights,code/GaussianModel/Tracking-Anything-with-DEVA/saves/,"SAM, GroundingDINO, and DEVA weights used for instance-mask generation and cross-view propagation.",external package or upstream download
-inpainting-model,code/GaussianModel/lama/big-lama/,"LaMa completion model used when constructing the background Gaussian model from object-removed views.",external package or upstream download
-inpainting-backbone-weights,code/GaussianModel/lama/hub/checkpoints/,"Backbone weights required by the LaMa background-completion workflow.",external package or upstream download
-training-checkpoints,code/GaussianModel/checkpoint/,"Optional paper-related training checkpoints for reproducing reported DOGS experiments.",external package only
-gaussian-outputs,code/GaussianModel/output/,"Paper-related object, background, and composed Gaussian outputs used for visual checks and conversion tests.",external package only
-simulation-assets,code/leisaac/assets/dogs/,"DOGS-converted USD/USDZ assets and optional mesh or collision-proxy carriers. The paper directly displays selected USDZ visual-import records in Isaac Sim; presence in this package does not imply URDF or Isaac Lab compatibility, hierarchy validation, collision loading, or numerical scale verification.",external package only
+paper-source-media,external_assets/paper_media/,"Source-resolution captures and recordings used to derive manuscript figures and project-page media.",external package only
+gaussian-outputs,code/GaussianModel/output/,"Object, background, and composed Gaussian outputs used for rendering and conversion.",external package only
+simulation-assets,code/leisaac/assets/dogs/,"Converted visual assets and optional geometric-proxy carriers used by the downstream simulation workspace.",external package only
+segmentation-weights,code/GaussianModel/Tracking-Anything-with-DEVA/saves/,"Upstream segmentation weights used for instance-mask generation and propagation.",external package or upstream download
+inpainting-model,code/GaussianModel/lama/big-lama/,"LaMa model used to construct weak background-completion priors.",external package or upstream download
+inpainting-backbone-weights,code/GaussianModel/lama/hub/checkpoints/,"Backbone weights required by the background-completion workflow.",external package or upstream download
+training-checkpoints,code/GaussianModel/checkpoint/,"Optional DOGS checkpoints associated with the reported experiments.",external package only

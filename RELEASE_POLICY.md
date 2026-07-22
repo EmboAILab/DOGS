@@ -17,7 +17,9 @@ Do not upload:
 - full upstream repositories when only a few adapted files are used;
 - nested `.git` histories;
 - manuscript Word/PDF files and local paper work logs;
-- model weights, checkpoints, datasets, rendered images, videos, point clouds, USD/USDZ/FBX/GLB assets, or experiment outputs;
+- model weights, checkpoints, source-resolution datasets, original recordings, point clouds, USD/USDZ/FBX/GLB assets, or experiment outputs;
+- file-level inventories of private media, including source filenames, experiment paths, episode identifiers, byte counts, or source hashes;
+- page-ready derivative media unless it is necessary for the public project page and has been downsampled and stripped of embedded metadata;
 - generated caches such as `__pycache__`, `.pytest_cache`, build directories, or logs.
 
 ## Third-Party Code

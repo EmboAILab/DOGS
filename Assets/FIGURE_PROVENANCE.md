@@ -6,7 +6,7 @@ The submitted DOGS figures use three source classes:
 2. Figures 4-7 and Appendix Fig. D.1 are manually authored composites of real photographs, reconstructed-scene outputs, or frames selected from recorded experimental and simulation videos.
 3. Figure 8 is a deterministic statistical plot exported from the ablation records reported in the manuscript.
 
-`FIGURE_SOURCE_MANIFEST.csv` maps each figure or panel to its source path and SHA-256 checksum. `PAPER_MEDIA_MANIFEST.csv` records the available still and video pool with byte counts and checksums. Large source media are kept outside GitHub under the restore policy in `ASSET_MANIFEST.csv`.
+`FIGURE_SOURCE_MANIFEST.csv` records figure-level source classes without publishing raw-media filenames, experiment paths, episode identifiers, byte counts, or source hashes. Large source media are kept outside GitHub under the category-level restore policy in `ASSET_MANIFEST.csv`.
 
 The source audit compared embedded media from the PowerPoint drawing archive against the separate historical image-generation directory and found no hash match in the submitted figure set. No generative-AI-created or generative-AI-modified image is used as a submitted manuscript figure.
 

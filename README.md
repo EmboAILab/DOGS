@@ -10,7 +10,7 @@ Project page: https://emboailab.github.io/DOGS/
 
 The project page and source release omit author biographies, personal contact details, and local machine paths. This author-neutral release policy is independent of the journal's single-anonymized manuscript review model.
 
-The release is intentionally source-focused. It does not include full upstream repositories, datasets, model weights, checkpoints, rendered images, videos, PLY point clouds, USD/USDZ/FBX/GLB assets, or experiment outputs. Paper-related large files are listed by category in `Assets/ASSET_MANIFEST.csv` and should be distributed separately.
+The release is intentionally source-focused. It does not include full upstream repositories, source-resolution datasets, original recordings, model weights, checkpoints, PLY point clouds, USD/USDZ/FBX/GLB assets, or experiment outputs. The project page uses only downsampled, metadata-stripped presentation derivatives. Paper-related large files are listed by category in `Assets/ASSET_MANIFEST.csv` and should be distributed separately.
 
 ## Repository Contents
 
@@ -43,7 +43,7 @@ The release is intentionally source-focused. It does not include full upstream r
   - The full simulation platform, large robot assets, and generated USD/USDZ files are not vendored.
 
 - `Assets/`
-  - Manifest and restore instructions for paper-related large files that are intentionally excluded from GitHub.
+  - Category-level restore policy and figure-level provenance for large files that are intentionally excluded from GitHub.
 
 - `RELEASE_POLICY.md`
   - Release policy for keeping the repository minimal and reviewable.
@@ -78,26 +78,12 @@ Python packages used by the local conversion scripts include `numpy`, `scipy`, `
 
 ## Large Assets and Demo Media
 
-Large files are excluded from GitHub. Restore paper-related assets according to:
+Source-resolution media and large binary assets are excluded from GitHub. Restore paper-related assets according to:
 
 - `Assets/README.md`
 - `Assets/ASSET_MANIFEST.csv`
 
-The external package should preserve only paper-relevant paths, including:
-
-```text
-results/fallBox/
-results/desk/
-results/fallAstr/
-results/fallCattle/
-code/GaussianModel/Tracking-Anything-with-DEVA/saves/
-code/GaussianModel/lama/big-lama/
-code/GaussianModel/lama/hub/checkpoints/
-code/GaussianModel/checkpoint/
-code/leisaac/assets/dogs/
-```
-
-Do not add unrelated local demos, full upstream repositories, private documents, Word manuscript files, rendered paper drafts, checkpoints, generated Gaussian outputs, USD/USDZ/FBX/GLB files, or general experiment dumps to this Git repository.
+The public manifests deliberately omit raw-media filenames, experiment-directory names, episode identifiers, file sizes, and source hashes. Do not add unrelated local demos, full upstream repositories, private documents, Word manuscript files, source-resolution media, checkpoints, generated Gaussian outputs, USD/USDZ/FBX/GLB files, or general experiment dumps to this Git repository.
 
 ## Evaluation Scope
 
