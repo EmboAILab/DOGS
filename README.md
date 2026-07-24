@@ -35,8 +35,8 @@ The release is intentionally source-focused. It does not include full upstream r
 
 - `Translate/`
   - Minimal Gaussian PLY to simulation asset conversion workflow.
-  - Filters Gaussian PLY files, generates a triangle `mesh.ply` proxy/collision carrier, invokes upstream 3DGRUT for visual USDZ export, and injects the mesh into USDZ with collision metadata.
-  - Only the conversion scripts and their direct local dependencies are included. The full 3DGRUT project is not vendored.
+  - Filters Gaussian PLY files, generates a triangle `mesh.ply` proxy/collision carrier, and invokes an installed upstream 3DGRUT package for visual USDZ export and mesh injection.
+  - Only DOGS-owned conversion scripts and their direct local dependencies are included. The full 3DGRUT project and its mesh-injection source are not vendored.
 
 - `Simulation/`
   - Documentation for checking converted DOGS assets in simulation scenes; this folder does not contain simulator-side executable code.
@@ -68,6 +68,7 @@ The conversion workflow depends on an installed upstream 3DGRUT environment for:
 
 ```bash
 python -m threedgrut.export.scripts.ply_to_usd
+python -m threedgrut.export.scripts.add_mesh_to_usdz --help
 ```
 
 Install upstream 3DGRUT separately from:
@@ -94,13 +95,15 @@ to USDZ visual import, object placement, and robot-scene coexistence in Isaac Si
 
 ## 3DGRUT Attribution
 
-The conversion workflow in `Translate/` includes code adapted from NVIDIA's 3DGRUT project, especially the USDZ mesh-injection utility.
+The conversion workflow in `Translate/` calls an installed NVIDIA 3DGRUT
+package for USDZ export and mesh injection. The corresponding upstream source
+is not redistributed in this repository.
 
 Original project:
 
 https://github.com/nv-tlabs/3dgrut
 
-The adapted 3DGRUT-derived code is distributed under the Apache License 2.0. See:
+The upstream 3DGRUT project is distributed under the Apache License 2.0. See:
 
 ```text
 Translate/third_party/3dgrut/LICENSE

@@ -16,7 +16,10 @@ The pipeline performs four steps:
 2. Convert the visual Gaussian PLY to USDZ by invoking upstream 3DGRUT:
    `python -m threedgrut.export.scripts.ply_to_usd`
 3. Generate a triangle `mesh.ply` from the Gaussian PLY for geometric-proxy or collision-proxy inspection.
-4. Add `mesh.ply` into the USDZ and enable collision metadata when the target simulator needs a proxy carrier.
+4. Invoke the installed upstream
+   `threedgrut.export.scripts.add_mesh_to_usdz` module to add `mesh.ply`
+   to the USDZ and enable collision metadata when the target simulator needs
+   a proxy carrier.
 
 After conversion, check asset loading, scene placement, scale consistency, package validity, and collision-proxy availability in the target simulator. Contact behavior, mass/inertia parameters, and controller behavior remain downstream simulator settings.
 
@@ -47,7 +50,9 @@ plyfile
 usd-core
 ```
 
-The visual USDZ export step requires upstream 3DGRUT to be installed and importable as `threedgrut`.
+The visual USDZ export and mesh-injection steps require upstream 3DGRUT to be
+installed and importable as `threedgrut`. The upstream mesh-injection source is
+not redistributed in this repository.
 
 ## Included Files
 
@@ -58,6 +63,4 @@ The visual USDZ export step requires upstream 3DGRUT to be installed and importa
 - `gaussian_ply_to_textured_mesh.py`: point filtering and mesh post-processing helpers.
 - `gaussian_ply_to_splat_mesh.py`: Gaussian PLY bounds and point utilities.
 - `ply_to_mesh.py`: Gaussian PLY parser and spherical-harmonic color helpers.
-- `add_mesh_to_usdz.py`: adapted 3DGRUT-derived mesh-injection utility.
-
 The paper-facing path is `run_3dgrut_usdz_collision_pipeline.py`. Other mesh helpers are retained because the geometric-proxy generator depends on their parsing, filtering, and mesh-processing utilities.

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Generate a triangle-mesh PLY suitable for 3DGRUT's add_mesh_to_usdz.py.
+Generate a triangle-mesh PLY suitable for 3DGRUT's installed
+``threedgrut.export.scripts.add_mesh_to_usdz`` module.
 
 3DGRUT expects:
 - element vertex with x, y, z float properties
@@ -42,7 +43,7 @@ def write_triangle_mesh_ply(path: Path, vertices: np.ndarray, faces: np.ndarray,
         [
             "ply",
             f"format {fmt}",
-            "comment triangle mesh generated for 3DGRUT add_mesh_to_usdz.py",
+            "comment triangle mesh generated for the 3DGRUT mesh-injection module",
             f"element vertex {len(vertices)}",
             "property float x",
             "property float y",

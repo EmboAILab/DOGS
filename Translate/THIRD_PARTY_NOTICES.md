@@ -2,13 +2,21 @@
 
 ## NVIDIA 3DGRUT
 
-Some conversion code in this folder is adapted from NVIDIA's 3DGRUT project:
+The conversion workflow invokes NVIDIA's separately installed 3DGRUT package:
 
 https://github.com/nv-tlabs/3dgrut
 
-The adapted code is used only for the Gaussian PLY to USDZ / collision-mesh conversion workflow. The full upstream 3DGRUT repository, training code, tests, README, datasets, and third-party dependencies are not vendored here.
+The repository does not redistribute 3DGRUT's USDZ export or mesh-injection
+source. The local pipeline calls
+`threedgrut.export.scripts.ply_to_usd` and
+`threedgrut.export.scripts.add_mesh_to_usdz` from the user's upstream
+installation. The full upstream project, training code, tests, datasets, and
+third-party dependencies are not vendored here.
 
-License: Apache License 2.0. See `third_party/3dgrut/LICENSE`.
+The upstream project is distributed under the Apache License 2.0. A copy is
+provided at `third_party/3dgrut/LICENSE` for dependency attribution. Individual
+upstream files remain subject to any file-specific notices in the installed
+3DGRUT distribution.
 
 ## Upstream Citations
 

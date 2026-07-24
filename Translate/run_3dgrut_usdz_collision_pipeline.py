@@ -62,7 +62,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--filter-max-points", type=int, default=0)
     parser.add_argument("--mesh-min-opacity", type=float, default=0.16)
     parser.add_argument("--simplify-target-faces", type=int, default=25000)
-    parser.add_argument("--set-invisible", action="store_true", help="Also pass --set_invisible to add_mesh_to_usdz if your 3DGRUT version supports it.")
+    parser.add_argument(
+        "--set-invisible",
+        action="store_true",
+        help=(
+            "Also pass --set_invisible to the installed upstream 3DGRUT "
+            "add_mesh_to_usdz module if that version supports it."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -164,7 +171,8 @@ def main() -> None:
 
     add_cmd = [
         sys.executable,
-        str(script_dir / "add_mesh_to_usdz.py"),
+        "-m",
+        "threedgrut.export.scripts.add_mesh_to_usdz",
         "--input_usdz",
         str(visual_usdz),
         "--output_usdz",
