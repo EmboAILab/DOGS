@@ -1,6 +1,6 @@
 # Asset Policy
 
-Source-resolution captures, original recordings, model outputs, and generated simulation assets are not included in this public release. No data-download package or cloud-drive link is provided or advertised by this repository.
+Source-resolution captures, original recordings, model outputs, and generated simulation assets are not included in this Git repository. A curated self-collected RGB package is maintained outside GitHub for research access through the corresponding author. Its scope is defined in `DATA_AVAILABILITY.md`; no unverified download URL is advertised.
 
 `ASSET_MANIFEST.csv` documents category-level local paths used by the project workflow. It is a placement-policy reference rather than an availability or download index, and intentionally omits source filenames, experiment-directory names, episode identifiers, byte counts, and source-media hashes.
 

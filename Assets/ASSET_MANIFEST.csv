@@ -1,4 +1,5 @@
 category,restore_path,description,git_policy
+self-collected-rgb-data,external_assets/data/DOGS_selected_rgb/,"Curated multi-object, object-reference, and empty-background RGB captures supporting the real-scene experiments.",available from corresponding author; do not commit to Git
 paper-source-media,external_assets/paper_media/,"Source-resolution captures and recordings used to derive manuscript figures and project-page media.",not included in public release
 gaussian-outputs,code/GaussianModel/output/,"Object, background, and composed Gaussian outputs used for rendering and conversion.",not included in public release
 simulation-assets,code/leisaac/assets/dogs/,"Converted visual assets and optional geometric-proxy carriers used by the downstream simulation workspace.",not included in public release

@@ -10,7 +10,7 @@ Project page: https://emboailab.github.io/DOGS/
 
 The project page and source release omit author biographies, personal contact details, and local machine paths. This author-neutral release policy is independent of the journal's single-anonymized manuscript review model.
 
-The release is intentionally source-focused. It does not include full upstream repositories, source-resolution datasets, original recordings, model weights, checkpoints, PLY point clouds, USD/USDZ/FBX/GLB assets, or experiment outputs. The project page uses only downsampled, metadata-stripped presentation derivatives. `Assets/ASSET_MANIFEST.csv` documents category-level local paths only and is not a data-download index.
+The release is intentionally source-focused. It does not include full upstream repositories, source-resolution datasets, original recordings, model weights, checkpoints, PLY point clouds, USD/USDZ/FBX/GLB assets, or experiment outputs. The project page uses only downsampled, metadata-stripped presentation derivatives. A curated self-collected RGB package is maintained outside the Git repository for research access through the corresponding author. `Assets/DATA_AVAILABILITY.md` defines its scope, while `Assets/ASSET_MANIFEST.csv` remains a category-level placement reference rather than a download index.
 
 ## Repository Contents
 
@@ -43,7 +43,7 @@ The release is intentionally source-focused. It does not include full upstream r
   - The full simulation platform, large robot assets, and generated USD/USDZ files are not vendored.
 
 - `Assets/`
-  - Category-level restore policy and figure-level provenance for large files that are intentionally excluded from GitHub.
+  - Data-availability scope, category-level restore policy, and figure-level provenance for files that are intentionally excluded from GitHub.
 
 - `RELEASE_POLICY.md`
   - Release policy for keeping the repository minimal and reviewable.
@@ -83,6 +83,9 @@ Source-resolution media and large binary assets are not included in this public 
 
 - `Assets/README.md`
 - `Assets/ASSET_MANIFEST.csv`
+- `Assets/DATA_AVAILABILITY.md`
+
+The selected self-collected package contains 404 metadata-sanitized RGB images covering one multi-object scene, four object-reference captures, and empty-background views. It is maintained outside GitHub and is available from the corresponding author upon reasonable request. Public Mip-NeRF360, LLFF, and LERF-Mask data are not mirrored here and should be obtained from their cited original repositories.
 
 The public manifests deliberately omit raw-media filenames, experiment-directory names, episode identifiers, file sizes, and source hashes. Do not add unrelated local demos, full upstream repositories, private documents, Word manuscript files, source-resolution media, checkpoints, generated Gaussian outputs, USD/USDZ/FBX/GLB files, or general experiment dumps to this Git repository.
 

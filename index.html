@@ -91,9 +91,9 @@
                   </a>
                 </span>
                 <span class="link-block">
-                  <a href="https://github.com/EmboAILab/DOGS/blob/main/Assets/README.md" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener">
+                  <a href="#data-availability" class="external-link button is-normal is-rounded is-dark">
                     <span class="icon"><i class="fas fa-database"></i></span>
-                    <span>Asset Policy</span>
+                    <span>Data</span>
                   </a>
                 </span>
                 <span class="link-block">
@@ -116,17 +116,65 @@
               </div>
             </div>
 
-            <div class="hero-evidence" aria-label="DOGS real-scene and simulation evidence">
-              <article class="evidence-card">
-                <img src="static/demos/fallbox-real-input.jpg" alt="Real captured tabletop scene used as DOGS input" loading="eager">
-                <h2>Real-scene input</h2>
-                <p>A captured tabletop object is used as the starting point for object-level decoupling, background recovery, and later scene recomposition.</p>
+            <div class="hero-evidence" aria-label="Four DOGS static and animated evidence pairs">
+              <article class="evidence-card evidence-pair-card">
+                <h2>Box object relocation</h2>
+                <div class="media-pair">
+                  <figure>
+                    <img src="static/demos/box-object-static.jpg" alt="Static frame of the independently rendered box object" loading="eager">
+                    <figcaption>Static frame</figcaption>
+                  </figure>
+                  <figure>
+                    <img src="static/demos/fallbox-decoupled.gif" alt="Animated relocation sequence of the independently rendered box object" loading="eager">
+                    <figcaption>Animated sequence</figcaption>
+                  </figure>
+                </div>
+                <p>The extracted box Gaussian group is inspected at a fixed placement and across the complete relocation sequence.</p>
               </article>
 
-              <article class="evidence-card">
-                <img src="static/demos/fallbox-robot-sim.gif" alt="DOGS asset checked with a robot arm in a simulation scene" loading="eager">
-                <h2>Simulation-interface check</h2>
-                <p>The converted asset is assembled into a robot-simulation scene with a robot arm as a selected visual placement and coexistence record.</p>
+              <article class="evidence-card evidence-pair-card">
+                <h2>Astronaut object relocation</h2>
+                <div class="media-pair">
+                  <figure>
+                    <img src="static/demos/astronaut-object-static.jpg" alt="Static frame of the independently rendered astronaut object" loading="eager">
+                    <figcaption>Static frame</figcaption>
+                  </figure>
+                  <figure>
+                    <img src="static/demos/fallastr-decoupled.gif" alt="Animated relocation sequence of the independently rendered astronaut object" loading="eager">
+                    <figcaption>Animated sequence</figcaption>
+                  </figure>
+                </div>
+                <p>The astronaut Gaussian group remains independently renderable while its placement changes in the recovered scene context.</p>
+              </article>
+
+              <article class="evidence-card evidence-pair-card">
+                <h2>Kettle object relocation</h2>
+                <div class="media-pair">
+                  <figure>
+                    <img src="static/demos/kettle-object-static.jpg" alt="Static frame of the independently rendered kettle object" loading="eager">
+                    <figcaption>Static frame</figcaption>
+                  </figure>
+                  <figure>
+                    <img src="static/demos/fallcattle-decoupled.gif" alt="Animated relocation sequence of the independently rendered kettle object" loading="eager">
+                    <figcaption>Animated sequence</figcaption>
+                  </figure>
+                </div>
+                <p>The kettle result provides a second shape and appearance case for inspecting object-level parameter ownership.</p>
+              </article>
+
+              <article class="evidence-card evidence-pair-card">
+                <h2>Background recovery</h2>
+                <div class="media-pair">
+                  <figure>
+                    <img src="static/demos/background-recovery-static.jpg" alt="Static frame of the independently recovered background model" loading="eager">
+                    <figcaption>Static frame</figcaption>
+                  </figure>
+                  <figure>
+                    <img src="static/demos/desk-background.gif" alt="Animated view sequence of the independently recovered background model" loading="eager">
+                    <figcaption>Animated sequence</figcaption>
+                  </figure>
+                </div>
+                <p>The background Gaussian model is shown after foreground removal as both a fixed inspection frame and a rendered view sequence.</p>
               </article>
             </div>
           </div>
@@ -228,19 +276,19 @@
         </div>
         <div class="result-stack">
           <figure class="figure-card">
-            <img src="static/images/dogs-real-scene-evidence.png" alt="Traceable DOGS real-scene decoupling evidence" loading="lazy">
+            <img src="static/images/dogs-real-scene-evidence.png" alt="Traceable DOGS real-scene decoupling evidence" loading="eager">
             <figcaption>A real tabletop example links captured input, independently rendered objects, object-removed background recovery, parameter-level recomposition, and robot-scene coexistence.</figcaption>
           </figure>
           <figure class="figure-card">
-            <img src="static/images/dogs-parameter-repositioning.png" alt="DOGS parameter-level object repositioning records" loading="lazy">
+            <img src="static/images/dogs-parameter-repositioning.png" alt="DOGS parameter-level object repositioning records" loading="eager">
             <figcaption>Two placements of each independently stored object asset record visible parameter-level repositioning in the same robot-simulation scene.</figcaption>
           </figure>
           <figure class="figure-card">
-            <img src="static/images/dogs-simulation-interface.png" alt="Selected DOGS USDZ visual interface records" loading="lazy">
+            <img src="static/images/dogs-simulation-interface.png" alt="Selected DOGS USDZ visual interface records" loading="eager">
             <figcaption>The displayed cases link real input, an independently rendered DOGS object, USDZ visual import in Isaac Sim, and the same scene after adding a robot.</figcaption>
           </figure>
           <figure class="figure-card">
-            <img src="static/images/dogs-asset-correspondence.png" alt="Real-to-virtual correspondence for four DOGS object categories" loading="lazy">
+            <img src="static/images/dogs-asset-correspondence.png" alt="Real-to-virtual correspondence for four DOGS object categories" loading="eager">
             <figcaption>Four object categories are traced across real frontal and wrist-camera views, imported robot-simulation scenes, virtual-environment top views, and robot-view inspections.</figcaption>
           </figure>
         </div>
@@ -268,15 +316,33 @@
     <section class="section hero is-light" id="code-and-assets">
       <div class="container is-max-desktop">
         <div class="has-text-centered">
-          <h2 class="title is-3">Code And Assets</h2>
+          <h2 class="title is-3">Code And Data</h2>
         </div>
         <div class="content has-text-justified">
           <p>
             The source release provides the paper-aligned training losses, PSNR/SSIM/LPIPS evaluation, the reported leakage metric, an auxiliary boundary-analysis protocol, executable parameter-level composition, conversion utilities, simulation-interface documentation, figure-level provenance, and a category-level asset policy.
           </p>
           <p>
-            Source-resolution media, original recordings, model weights, Gaussian outputs, and USD/USDZ assets are not included in this public release. The public manifests document only category-level local paths and do not provide or advertise a data-download package.
+            Source-resolution media, model weights, Gaussian outputs, and USD/USDZ assets are not stored in the public source repository. A curated, metadata-sanitized self-collected RGB package is maintained separately for research access, while public benchmark datasets remain available from their original project repositories.
           </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="data-availability">
+      <div class="container is-max-desktop">
+        <div class="has-text-centered">
+          <h2 class="title is-3">Data Availability</h2>
+        </div>
+        <div class="interface-grid">
+          <article class="interface-card">
+            <h3>Public benchmark data</h3>
+            <p>Mip-NeRF360, LLFF, and LERF-Mask are not mirrored by this repository. They remain available from the original project repositories cited in the manuscript.</p>
+          </article>
+          <article class="interface-card">
+            <h3>Selected self-collected RGB data</h3>
+            <p>A 404-image package covers one multi-object scene, four object-reference captures, and empty-background views. Identifying EXIF fields and local paths are removed, and research access is provided by the corresponding author upon reasonable request. <a href="https://github.com/EmboAILab/DOGS/blob/main/Assets/DATA_AVAILABILITY.md" target="_blank" rel="noopener">View the release scope</a>.</p>
+          </article>
         </div>
       </div>
     </section>
