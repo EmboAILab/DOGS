@@ -330,6 +330,8 @@ body {
 }
 
 .evidence-card {
+  display: flex;
+  flex-direction: column;
   padding: 0.9rem;
   background: var(--background-primary);
   border: 1px solid var(--border-color);
@@ -384,6 +386,16 @@ body {
 
 .evidence-pair-card .media-pair img {
   aspect-ratio: 8 / 5;
+}
+
+.evidence-single-card .media-pair {
+  width: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.evidence-single-card p {
+  margin-top: 0;
 }
 
 .demo-strip {

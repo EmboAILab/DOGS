@@ -116,7 +116,7 @@
               </div>
             </div>
 
-            <div class="hero-evidence" aria-label="Four DOGS real-scene and animated evidence pairs">
+            <div class="hero-evidence" aria-label="Four DOGS object decoupling and scene recomposition demonstrations">
               <article class="evidence-card evidence-pair-card">
                 <h2>Box object relocation</h2>
                 <div class="media-pair">
@@ -132,49 +132,45 @@
                 <p>The source capture is paired with the animated relocation of its extracted object Gaussian group in the recovered scene context.</p>
               </article>
 
-              <article class="evidence-card evidence-pair-card">
-                <h2>Astronaut object relocation</h2>
+              <article class="evidence-card evidence-single-card">
+                <h2>Background recovery from a composed scene</h2>
                 <div class="media-pair">
                   <figure>
-                    <img src="static/demos/astronaut-real-scene.jpg" alt="Original real-scene image containing the astronaut object" loading="eager">
-                    <figcaption>Original real scene</figcaption>
-                  </figure>
-                  <figure>
-                    <img src="static/demos/fallastr-decoupled.gif" alt="Animated relocation sequence of the independently rendered astronaut object" loading="eager">
-                    <figcaption>Animated sequence</figcaption>
+                    <img src="static/demos/desk-background.gif" alt="Animated view sequence of the background Gaussian model recovered from the composed scene" loading="eager">
+                    <figcaption>Recovered background sequence</figcaption>
                   </figure>
                 </div>
-                <p>The real scene containing the astronaut is paired with the animated relocation of the corresponding extracted Gaussian group.</p>
+                <p>The foreground object groups are removed from the composed scene to recover an independently renderable background Gaussian model.</p>
               </article>
 
               <article class="evidence-card evidence-pair-card">
-                <h2>Kettle object relocation</h2>
+                <h2>Kettle background replacement</h2>
                 <div class="media-pair">
                   <figure>
                     <img src="static/demos/kettle-real-scene.jpg" alt="Original real-scene image of the kettle object" loading="eager">
-                    <figcaption>Original real scene</figcaption>
+                    <figcaption>Original kettle scene</figcaption>
                   </figure>
                   <figure>
-                    <img src="static/demos/fallcattle-decoupled.gif" alt="Animated relocation sequence of the independently rendered kettle object" loading="eager">
-                    <figcaption>Animated sequence</figcaption>
+                    <img src="static/demos/fallcattle-decoupled.gif" alt="Animated sequence of the extracted kettle object rendered against a replacement background" loading="eager">
+                    <figcaption>Replacement-background sequence</figcaption>
                   </figure>
                 </div>
-                <p>The real kettle capture is paired with the animated relocation sequence used to inspect object-level parameter ownership.</p>
+                <p>The extracted kettle Gaussian group is transferred from its source capture into a different recovered background without retraining the object model.</p>
               </article>
 
               <article class="evidence-card evidence-pair-card">
-                <h2>Background recovery</h2>
+                <h2>Object extraction from a multi-object scene</h2>
                 <div class="media-pair">
                   <figure>
-                    <img src="static/demos/background-real-scene.jpg" alt="Original real-scene image of the desk background" loading="eager">
-                    <figcaption>Original real scene</figcaption>
+                    <img src="static/demos/astronaut-real-scene.jpg" alt="Original multi-object real scene containing the target astronaut" loading="eager">
+                    <figcaption>Original multi-object scene</figcaption>
                   </figure>
                   <figure>
-                    <img src="static/demos/desk-background.gif" alt="Animated view sequence of the independently recovered background model" loading="eager">
-                    <figcaption>Animated sequence</figcaption>
+                    <img src="static/demos/fallastr-decoupled.gif" alt="Animated sequence of the selected astronaut extracted and rendered against a replacement background" loading="eager">
+                    <figcaption>Extracted-object sequence</figcaption>
                   </figure>
                 </div>
-                <p>An object-free real capture is paired with the rendered view sequence of the independently reconstructed background Gaussian model.</p>
+                <p>A selected astronaut is extracted from a scene containing multiple objects and recomposed against a replacement background.</p>
               </article>
             </div>
           </div>
