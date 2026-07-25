@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <meta name="title" content="DOGS: Decoupled Object Gaussian Splatting for Composable Real-Scene Reconstruction and Reuse">
-  <meta name="description" content="DOGS represents real scenes with identity-aware object Gaussian parameter groups learned in one multi-object optimization and an independently reconstructed background Gaussian model for object-level manipulation, background recovery, parameter-level composition, and selected visual asset-interface checks.">
+  <meta name="description" content="DOGS reconstructs real scenes as identity-aware object Gaussian parameter groups and an independent background Gaussian model, then directly recomposes them as editable assets for constructing robot-simulation scenes, with selected USDZ visual-import checks in Isaac Sim.">
   <meta name="keywords" content="DOGS, 3D Gaussian Splatting, object-level decoupling, robot simulation, digital twin, Gaussian asset representation">
   <meta name="robots" content="index, follow">
   <meta name="language" content="English">
@@ -13,7 +13,7 @@
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="DOGS Project">
   <meta property="og:title" content="DOGS: Decoupled Object Gaussian Splatting for Composable Real-Scene Reconstruction and Reuse">
-  <meta property="og:description" content="Object-level decoupled 3D Gaussian scene representation for independent object manipulation, background recovery, parameter-level composition, and selected visual asset-interface checks.">
+  <meta property="og:description" content="Object-level decoupled 3D Gaussian reconstruction with background recovery and direct parameter recomposition for constructing editable robot-simulation scenes.">
   <meta property="og:url" content="https://emboailab.github.io/DOGS/">
   <meta property="og:image" content="static/images/social_preview.png">
   <meta property="og:image:width" content="1200">
@@ -25,7 +25,7 @@
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="DOGS: Decoupled Object Gaussian Splatting for Composable Real-Scene Reconstruction and Reuse">
-  <meta name="twitter:description" content="Object-level decoupled 3D Gaussian scene representation for independent object manipulation, background recovery, parameter-level composition, and selected visual asset-interface checks.">
+  <meta name="twitter:description" content="Object-level decoupled 3D Gaussian reconstruction with background recovery and direct parameter recomposition for constructing editable robot-simulation scenes.">
   <meta name="twitter:image" content="static/images/social_preview.png">
   <meta name="twitter:image:alt" content="DOGS framework overview">
 
@@ -56,7 +56,7 @@
     "@context": "https://schema.org",
     "@type": "ScholarlyArticle",
     "headline": "DOGS: Decoupled Object Gaussian Splatting for Composable Real-Scene Reconstruction and Reuse",
-    "description": "DOGS decomposes a real scene into identity-aware object Gaussian parameter groups learned in one multi-object optimization and an independently reconstructed background Gaussian model, then recomposes them in a shared world coordinate system for independent manipulation and selected visual asset-interface checks.",
+    "description": "DOGS decomposes a real scene into identity-aware object Gaussian parameter groups and an independently reconstructed background Gaussian model, then directly recomposes them in a shared world coordinate system as editable assets for constructing robot-simulation scenes.",
     "url": "https://emboailab.github.io/DOGS/",
     "image": "static/images/social_preview.png",
     "keywords": ["DOGS", "3D Gaussian Splatting", "object-level decoupling", "robot simulation", "digital twin"],
@@ -81,7 +81,7 @@
             <div class="hero-copy">
               <div class="paper-badge">Research project - 2026</div>
               <h1 class="title is-1 publication-title">DOGS: Decoupled Object Gaussian Splatting for Composable Real-Scene Reconstruction and Reuse</h1>
-              <p class="subtitle is-4 publication-subtitle">Independent object Gaussian subspaces, background Gaussian recovery, parameter-level scene composition, and selected visual asset-interface checks</p>
+              <p class="subtitle is-4 publication-subtitle">Independent object Gaussian subspaces, background Gaussian recovery, and direct recomposition for editable robot-simulation scene construction</p>
 
               <div class="publication-links">
                 <span class="link-block">
@@ -111,7 +111,7 @@
                 </div>
                 <div>
                   <span class="proof-index">02</span>
-                  <p>The resulting Gaussian assets can be omitted, repositioned, recomposed with the recovered background, and visually inspected after USD/USDZ conversion.</p>
+                  <p>The resulting object and background Gaussian assets are directly recomposed to construct editable robot-simulation scenes and visually inspected after USD/USDZ conversion.</p>
                 </div>
               </div>
             </div>
@@ -126,7 +126,7 @@
               <article class="evidence-card">
                 <img src="static/demos/fallbox-robot-sim.gif" alt="DOGS asset checked with a robot arm in a simulation scene" loading="eager">
                 <h2>Simulation-interface check</h2>
-                <p>The converted asset is shown in a virtual scene with a robot arm as a selected visual placement and coexistence record.</p>
+                <p>The converted asset is assembled into a robot-simulation scene with a robot arm as a selected visual placement and coexistence record.</p>
               </article>
             </div>
           </div>
@@ -141,7 +141,7 @@
             <img src="static/images/dogs-overview.png" alt="DOGS framework overview" loading="eager">
           </figure>
           <h2 class="subtitle has-text-centered">
-            DOGS decomposes a multi-view real scene into independent object Gaussian subspaces and a background Gaussian model, then recomposes the stored parameter sets in a shared world coordinate system.
+            DOGS decomposes a multi-view real scene into independent object Gaussian subspaces and a background Gaussian model, then directly recomposes them as editable assets for constructing robot-simulation scenes.
           </h2>
         </div>
       </div>
@@ -160,7 +160,7 @@
                 DOGS addresses this representation gap through one multi-object optimization that maintains an instance-identity distribution for each Gaussian. Cross-view instance masks, foreground supervision, and mask-outside alpha suppression establish object-aware parameter groups, which are extracted by hard identity assignment after convergence. A separately supervised background Gaussian model combines visible-background observations with weak inpainting priors, and parameter-level scene composition assembles the resulting components in a shared coordinate system.
               </p>
               <p>
-                The current evidence follows traceable real-scene and real-to-virtual records: object relocation, background recovery after object removal, four-category correspondence across real and virtual views, and selected USDZ visual-import records in Isaac Sim. These observations support a visual scene-representation and asset-provisioning interpretation; they do not establish URDF or Isaac Lab compatibility, hierarchy validation, collision-proxy loading, numerical scale accuracy, dynamics accuracy, or closed-loop task performance.
+                The decoupled object Gaussian subspaces and background model connect object-level real-scene reconstruction to the construction of editable robot-simulation scenes. The current evidence follows traceable real-scene and real-to-virtual records: object relocation, background recovery after object removal, four-category correspondence across real and virtual views, and selected USDZ visual-import records in Isaac Sim. These observations support a visual scene-representation and asset-provisioning interpretation; they do not establish URDF or Isaac Lab compatibility, hierarchy validation, collision-proxy loading, numerical scale accuracy, dynamics accuracy, or closed-loop task performance.
               </p>
             </div>
           </div>
@@ -186,8 +186,8 @@
           </article>
           <article class="feature-card">
             <div class="feature-icon"><i class="fas fa-robot"></i></div>
-            <h3>Asset-interface composition</h3>
-            <p>Independent object and background Gaussian models are composed in a shared coordinate system, supporting omission, repositioning, visual recomposition, and downstream USD/USDZ conversion.</p>
+            <h3>Robot-simulation scene composition</h3>
+            <p>DOGS directly recomposes the extracted object Gaussian subspaces with the aligned background model to construct editable robot-simulation scenes. Selected USDZ imports and visual placement checks in Isaac Sim provide interface-level validation.</p>
           </article>
         </div>
       </div>
@@ -233,7 +233,7 @@
           </figure>
           <figure class="figure-card">
             <img src="static/images/dogs-parameter-repositioning.png" alt="DOGS parameter-level object repositioning records" loading="lazy">
-            <figcaption>Two placements of each independently stored object asset record visible parameter-level repositioning in the same virtual scene.</figcaption>
+            <figcaption>Two placements of each independently stored object asset record visible parameter-level repositioning in the same robot-simulation scene.</figcaption>
           </figure>
           <figure class="figure-card">
             <img src="static/images/dogs-simulation-interface.png" alt="Selected DOGS USDZ visual interface records" loading="lazy">
@@ -241,7 +241,7 @@
           </figure>
           <figure class="figure-card">
             <img src="static/images/dogs-asset-correspondence.png" alt="Real-to-virtual correspondence for four DOGS object categories" loading="lazy">
-            <figcaption>Four object categories are traced across real frontal and wrist-camera views, imported virtual scenes, virtual-environment top views, and robot-view inspections.</figcaption>
+            <figcaption>Four object categories are traced across real frontal and wrist-camera views, imported robot-simulation scenes, virtual-environment top views, and robot-view inspections.</figcaption>
           </figure>
         </div>
       </div>

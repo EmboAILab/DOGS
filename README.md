@@ -4,7 +4,7 @@ This repository is the paper-aligned minimal code release for:
 
 **DOGS: Decoupled Object Gaussian Splatting for Composable Real-Scene Reconstruction and Reuse**
 
-DOGS targets object-level decoupling of real scenes, independent background recovery, parameter-level scene composition, and visual asset-interface checks. The code release is scoped to those representation and conversion components; it does not claim dynamics modeling, collision fidelity, closed-loop control, or robot task-performance validation.
+DOGS addresses object-level decoupled reconstruction of real scenes, independent background recovery, and direct parameter-level recomposition of the resulting assets for constructing editable robot-simulation scenes. Selected USDZ visual imports and placement checks in Isaac Sim provide interface-level validation. The code release is scoped to those representation and conversion components; it does not claim dynamics modeling, collision fidelity, closed-loop control, or robot task-performance validation.
 
 Project page: https://emboailab.github.io/DOGS/
 
@@ -30,7 +30,7 @@ The release is intentionally source-focused. It does not include full upstream r
   - Implements the reported background leakage rate and the auxiliary, non-reported boundary F-score protocol.
 
 - `Composition/`
-  - Directly concatenates compatible background and object Gaussian PLY parameter records in their shared world coordinate system.
+  - Directly concatenates compatible background and object Gaussian PLY parameter records in their shared world coordinate system to construct editable robot-simulation scenes.
   - Applies no translation, rotation, or scale transform and writes a SHA-256/count manifest for the composed scene.
 
 - `Translate/`
@@ -39,7 +39,7 @@ The release is intentionally source-focused. It does not include full upstream r
   - Only DOGS-owned conversion scripts and their direct local dependencies are included. The full 3DGRUT project and its mesh-injection source are not vendored.
 
 - `Simulation/`
-  - Documentation for checking converted DOGS assets in simulation scenes; this folder does not contain simulator-side executable code.
+  - Documentation for checking converted DOGS assets in constructed robot-simulation scenes; this folder does not contain simulator-side executable code.
   - The full simulation platform, large robot assets, and generated USD/USDZ files are not vendored.
 
 - `Assets/`
@@ -50,15 +50,15 @@ The release is intentionally source-focused. It does not include full upstream r
 
 ## Paper Scope And Evidence
 
-DOGS focuses on object-level decoupled modeling of real captured scenes, independent background recovery, parameter-level scene composition, and conversion of Gaussian assets into simulation-readable visual assets. The code release therefore covers:
+DOGS focuses on object-level decoupled reconstruction of real captured scenes, independent background recovery, and direct recomposition of object Gaussian subspaces with the aligned background model to construct editable robot-simulation scenes. The code release therefore covers:
 
 1. object Gaussian subspace training with foreground supervision and mask-outside alpha suppression;
 2. background Gaussian modeling with RGB supervision and local geometry regularization;
-3. executable parameter-level scene composition in a shared world coordinate frame;
+3. executable direct parameter-level recomposition for editable robot-simulation scene construction in a shared world coordinate frame;
 4. Gaussian-to-asset conversion through mesh/collision-proxy and USD/USDZ carriers;
 5. documentation corresponding to the selected USDZ visual-import evidence shown in Isaac Sim.
 
-The displayed simulation-facing evidence covers USDZ visual import, object placement, and robot-scene coexistence in Isaac Sim. It does not establish URDF or Isaac Lab compatibility, hierarchy validation, collision-proxy loading, numerical scale accuracy, dynamics, or task-level behavior.
+The resulting object and background Gaussian assets are assembled into robot-simulation scenes as reusable visual assets. The displayed interface-level evidence covers USDZ visual import, object placement, and robot-scene coexistence in Isaac Sim. It does not establish URDF or Isaac Lab compatibility, hierarchy validation, collision-proxy loading, numerical scale accuracy, dynamics, or task-level behavior.
 
 ## External Dependencies
 
@@ -90,8 +90,10 @@ The public manifests deliberately omit raw-media filenames, experiment-directory
 
 The manuscript evaluates object and background reconstruction, composed-scene
 rendering, opacity leakage, an auxiliary boundary protocol, and selected visual
-asset-interface evidence. The directly displayed simulation evidence is limited
-to USDZ visual import, object placement, and robot-scene coexistence in Isaac Sim.
+asset-interface evidence. The extracted object subspaces and aligned background
+are directly recomposed as reusable visual assets for constructing editable
+robot-simulation scenes. The displayed interface-level evidence is limited to
+USDZ visual import, object placement, and robot-scene coexistence in Isaac Sim.
 
 ## 3DGRUT Attribution
 
