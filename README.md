@@ -10,7 +10,7 @@ Project page: https://emboailab.github.io/DOGS/
 
 The project page and source release omit author biographies, personal contact details, and local machine paths. This author-neutral release policy is independent of the journal's single-anonymized manuscript review model.
 
-The release is intentionally source-focused. It does not include full upstream repositories, source-resolution datasets, original recordings, model weights, checkpoints, PLY point clouds, USD/USDZ/FBX/GLB assets, or experiment outputs. The project page uses only downsampled, metadata-stripped presentation derivatives. A curated self-collected RGB package is maintained outside the Git repository for research access through the corresponding author. `Assets/DATA_AVAILABILITY.md` defines its scope, while `Assets/ASSET_MANIFEST.csv` remains a category-level placement reference rather than a download index.
+The source history is intentionally code-focused. It does not include full upstream repositories, source-resolution datasets, original recordings, model weights, checkpoints, PLY point clouds, USD/USDZ/FBX/GLB assets, or experiment outputs. The project page uses only downsampled, metadata-stripped presentation derivatives. A selected, metadata-sanitized subset of the self-collected RGB data is published separately as a [GitHub Release](https://github.com/EmboAILab/DOGS/releases/tag/data-v1.0.0), without adding the source images to Git history. `Assets/DATA_AVAILABILITY.md` defines the released scope, while `Assets/ASSET_MANIFEST.csv` remains a category-level placement reference.
 
 ## Repository Contents
 
@@ -43,7 +43,7 @@ The release is intentionally source-focused. It does not include full upstream r
   - The full simulation platform, large robot assets, and generated USD/USDZ files are not vendored.
 
 - `Assets/`
-  - Data-availability scope, category-level restore policy, and figure-level provenance for files that are intentionally excluded from GitHub.
+  - Data-release scope, category-level restore policy, and figure-level provenance for files that are intentionally excluded from Git history.
 
 - `RELEASE_POLICY.md`
   - Release policy for keeping the repository minimal and reviewable.
@@ -79,13 +79,13 @@ Python packages used by the local conversion scripts include `numpy`, `scipy`, `
 
 ## Large Assets and Demo Media
 
-Source-resolution media and large binary assets are not included in this public release. The following files document category-level local paths and provenance only:
+Source-resolution media and large binary assets are not committed to the public source history. The following files document the separate data release, category-level local paths, and figure provenance:
 
 - `Assets/README.md`
 - `Assets/ASSET_MANIFEST.csv`
 - `Assets/DATA_AVAILABILITY.md`
 
-The selected self-collected package contains 404 metadata-sanitized RGB images covering one multi-object scene, four object-reference captures, and empty-background views. It is maintained outside GitHub and is available from the corresponding author upon reasonable request. Public Mip-NeRF360, LLFF, and LERF-Mask data are not mirrored here and should be obtained from their cited original repositories.
+The [selected partial dataset release](https://github.com/EmboAILab/DOGS/releases/tag/data-v1.0.0) contains 627 metadata-sanitized RGB images in nine groups. It covers one multi-object scene, four object-reference captures, empty-background views, and the additional `combination`, `guo`, and `hu` sequences. This release is only a selected subset of the self-collected data. Most benchmark experiments use public [Mip-NeRF360](https://jonbarron.info/mipnerf360/), [LLFF](https://github.com/Fyusion/LLFF), and [LERF-Mask](https://github.com/lkeab/gaussian-grouping/blob/main/docs/dataset.md) data, which are not mirrored here.
 
 The public manifests deliberately omit raw-media filenames, experiment-directory names, episode identifiers, file sizes, and source hashes. Do not add unrelated local demos, full upstream repositories, private documents, Word manuscript files, source-resolution media, checkpoints, generated Gaussian outputs, USD/USDZ/FBX/GLB files, or general experiment dumps to this Git repository.
 

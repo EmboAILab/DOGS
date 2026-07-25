@@ -39,6 +39,12 @@ dist/
 *.gif
 *.webp
 
+# Metadata-stripped project-page evidence images.
+!static/demos/box-real-scene.jpg
+!static/demos/astronaut-real-scene.jpg
+!static/demos/kettle-real-scene.jpg
+!static/demos/background-real-scene.jpg
+
 # Local manuscript, release, and automation-only materials.
 AGENTS.md
 Doc/

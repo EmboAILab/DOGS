@@ -36,11 +36,11 @@ When only part of an upstream project is used:
 
 For large assets:
 
-1. Keep them out of GitHub.
+1. Keep them out of Git history.
 2. Summarize paper-related asset groups in `Assets/ASSET_MANIFEST.csv`.
 3. Copy required assets into a local `CloudDiskPackage/<package-name>/` directory while preserving restore paths.
-4. Publish the package separately from GitHub.
-5. Keep access links in release notes or the repository release page, not in source files unless the link is stable.
+4. Keep them out of Git history and publish an approved package as a separate GitHub Release asset or an external archival record.
+5. Keep only stable, verified access links in the repository documentation.
 
 ## Review Before Push
 
