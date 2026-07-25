@@ -11,7 +11,7 @@ build/
 dist/
 *.egg-info/
 
-# Large assets and generated outputs belong in the cloud-drive package.
+# Large assets and generated outputs are not included in the public release.
 *.pth
 *.pt
 *.ckpt

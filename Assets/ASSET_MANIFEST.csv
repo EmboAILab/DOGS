@@ -1,8 +1,8 @@
 category,restore_path,description,git_policy
-paper-source-media,external_assets/paper_media/,"Source-resolution captures and recordings used to derive manuscript figures and project-page media.",external package only
-gaussian-outputs,code/GaussianModel/output/,"Object, background, and composed Gaussian outputs used for rendering and conversion.",external package only
-simulation-assets,code/leisaac/assets/dogs/,"Converted visual assets and optional geometric-proxy carriers used by the downstream simulation workspace.",external package only
-segmentation-weights,code/GaussianModel/Tracking-Anything-with-DEVA/saves/,"Upstream segmentation weights used for instance-mask generation and propagation.",external package or upstream download
-inpainting-model,code/GaussianModel/lama/big-lama/,"LaMa model used to construct weak background-completion priors.",external package or upstream download
-inpainting-backbone-weights,code/GaussianModel/lama/hub/checkpoints/,"Backbone weights required by the background-completion workflow.",external package or upstream download
-training-checkpoints,code/GaussianModel/checkpoint/,"Optional DOGS checkpoints associated with the reported experiments.",external package only
+paper-source-media,external_assets/paper_media/,"Source-resolution captures and recordings used to derive manuscript figures and project-page media.",not included in public release
+gaussian-outputs,code/GaussianModel/output/,"Object, background, and composed Gaussian outputs used for rendering and conversion.",not included in public release
+simulation-assets,code/leisaac/assets/dogs/,"Converted visual assets and optional geometric-proxy carriers used by the downstream simulation workspace.",not included in public release
+segmentation-weights,code/GaussianModel/Tracking-Anything-with-DEVA/saves/,"Upstream segmentation weights used for instance-mask generation and propagation.",obtain from upstream project
+inpainting-model,code/GaussianModel/lama/big-lama/,"LaMa model used to construct weak background-completion priors.",obtain from upstream project
+inpainting-backbone-weights,code/GaussianModel/lama/hub/checkpoints/,"Backbone weights required by the background-completion workflow.",obtain from upstream project
+training-checkpoints,code/GaussianModel/checkpoint/,"Optional DOGS checkpoints associated with the reported experiments.",not included in public release

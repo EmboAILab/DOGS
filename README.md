@@ -10,7 +10,7 @@ Project page: https://emboailab.github.io/DOGS/
 
 The project page and source release omit author biographies, personal contact details, and local machine paths. This author-neutral release policy is independent of the journal's single-anonymized manuscript review model.
 
-The release is intentionally source-focused. It does not include full upstream repositories, source-resolution datasets, original recordings, model weights, checkpoints, PLY point clouds, USD/USDZ/FBX/GLB assets, or experiment outputs. The project page uses only downsampled, metadata-stripped presentation derivatives. Paper-related large files are listed by category in `Assets/ASSET_MANIFEST.csv` and should be distributed separately.
+The release is intentionally source-focused. It does not include full upstream repositories, source-resolution datasets, original recordings, model weights, checkpoints, PLY point clouds, USD/USDZ/FBX/GLB assets, or experiment outputs. The project page uses only downsampled, metadata-stripped presentation derivatives. `Assets/ASSET_MANIFEST.csv` documents category-level local paths only and is not a data-download index.
 
 ## Repository Contents
 
@@ -79,7 +79,7 @@ Python packages used by the local conversion scripts include `numpy`, `scipy`, `
 
 ## Large Assets and Demo Media
 
-Source-resolution media and large binary assets are excluded from GitHub. Restore paper-related assets according to:
+Source-resolution media and large binary assets are not included in this public release. The following files document category-level local paths and provenance only:
 
 - `Assets/README.md`
 - `Assets/ASSET_MANIFEST.csv`

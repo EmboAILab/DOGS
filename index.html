@@ -182,17 +182,12 @@
           <article class="feature-card">
             <div class="feature-icon"><i class="fas fa-object-ungroup"></i></div>
             <h3>Foreground and alpha decoupling</h3>
-            <p>Instance-mask foreground supervision and mask-outside alpha suppression restrict each object model to its own support region and reduce non-target opacity responses.</p>
+            <p>Instance-mask foreground supervision and mask-outside alpha suppression restrict each identity-aware object group to its own support region and reduce non-target opacity responses.</p>
           </article>
           <article class="feature-card">
             <div class="feature-icon"><i class="fas fa-robot"></i></div>
             <h3>Asset-interface composition</h3>
             <p>Independent object and background Gaussian models are composed in a shared coordinate system, supporting omission, repositioning, visual recomposition, and downstream USD/USDZ conversion.</p>
-          </article>
-          <article class="feature-card">
-            <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
-            <h3>Evidence chain</h3>
-            <p>Evaluation links object reconstruction, background recovery, composed-scene consistency, and the displayed Isaac Sim visual-import records to the same object-level decoupling claim.</p>
           </article>
         </div>
       </div>
@@ -280,7 +275,7 @@
             The source release provides the paper-aligned training losses, PSNR/SSIM/LPIPS evaluation, the reported leakage metric, an auxiliary boundary-analysis protocol, executable parameter-level composition, conversion utilities, simulation-interface documentation, figure-level provenance, and a category-level asset policy.
           </p>
           <p>
-            Source-resolution media, original recordings, model weights, Gaussian outputs, and USD/USDZ assets are excluded. Public manifests do not expose source filenames, experiment paths, episode identifiers, file sizes, or source-media hashes.
+            Source-resolution media, original recordings, model weights, Gaussian outputs, and USD/USDZ assets are not included in this public release. The public manifests document only category-level local paths and do not provide or advertise a data-download package.
           </p>
         </div>
       </div>
