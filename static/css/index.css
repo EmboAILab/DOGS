@@ -545,6 +545,59 @@ body {
   gap: 1.5rem;
 }
 
+.robot-operation-record {
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.robot-operation-copy h3 {
+  margin: 0.45rem 0 0.75rem;
+  color: var(--text-primary);
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.robot-operation-copy p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.operation-kicker {
+  color: var(--primary-color);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.robot-operation-record figure {
+  margin: 0;
+}
+
+.robot-operation-record img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 8 / 5;
+  object-fit: cover;
+  border-radius: 8px;
+  background: var(--background-accent);
+}
+
+.robot-operation-record figcaption {
+  margin-top: 0.65rem;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  text-align: center;
+}
+
 .metric-card {
   border-top: 4px solid var(--accent-green);
 }
@@ -894,7 +947,8 @@ code {
 
   .feature-grid,
   .method-grid,
-  .interface-grid {
+  .interface-grid,
+  .robot-operation-record {
     grid-template-columns: 1fr;
   }
 
