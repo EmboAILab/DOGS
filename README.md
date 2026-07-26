@@ -58,7 +58,7 @@ DOGS focuses on object-level decoupled reconstruction of real captured scenes, i
 4. Gaussian-to-asset conversion through mesh/collision-proxy and USD/USDZ carriers;
 5. documentation corresponding to the selected USDZ visual-import evidence shown in Isaac Sim.
 
-The resulting object and background Gaussian assets are assembled into robot-simulation scenes as reusable visual assets. The displayed interface-level evidence covers USDZ visual import, object placement, robot-scene coexistence in Isaac Sim, and a recorded robot-arm interaction sequence in one reconstructed scene. It does not establish URDF or Isaac Lab compatibility, hierarchy validation, collision-proxy loading, numerical scale accuracy, dynamics, or task-level behavior.
+The resulting object and background Gaussian assets are assembled into robot-simulation scenes as reusable visual assets. The project page presents source-derived virtual-scene, robot-approach, and interaction frames for four object categories, together with a recorded robot-arm interaction sequence in one reconstructed scene. The displayed interface-level evidence covers USDZ visual import, object placement, and robot-scene coexistence in Isaac Sim. It does not establish URDF or Isaac Lab compatibility, hierarchy validation, collision-proxy loading, numerical scale accuracy, dynamics, or task-level behavior.
 
 ## External Dependencies
 

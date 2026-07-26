@@ -8,6 +8,8 @@ The submitted DOGS figures use three source classes:
 
 `FIGURE_SOURCE_MANIFEST.csv` records figure-level source classes without publishing raw-media filenames, experiment paths, episode identifiers, byte counts, or source hashes. Large source media are kept outside Git history under the category-level restore policy in `ASSET_MANIFEST.csv`; the separately scoped partial RGB release is documented in `DATA_AVAILABILITY.md`.
 
+The project-page virtual gallery uses twelve downsampled, metadata-stripped frames extracted from the same class of source simulation recordings. These presentation derivatives expose no source filename, episode identifier, local path, or embedded camera metadata.
+
 The source audit compared embedded media from the PowerPoint drawing archive against the separate historical image-generation directory and found no hash match in the submitted figure set. No generative-AI-created or generative-AI-modified image is used as a submitted manuscript figure.
 
 The figure evidence is bounded as follows:
